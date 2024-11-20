@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>OmniCart - Smart Shopping List</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>OmniCart</h1>
+            <div class="language-selector">
+                <label for="targetLang">Translate to:</label>
+                <select id="targetLang">
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="sv">Swedish</option>
+                </select>
+            </div>
+        </header>
+
+        <main>
+            <div class="input-container">
+                <input type="text" id="itemInput" placeholder="Add an item..." autocomplete="off">
+                <button id="addItem">Add</button>
+            </div>
+
+            <div class="lists-container">
+                <!-- Categories will be dynamically populated here -->
+            </div>
+        </main>
+
+        <div class="clear-all">
+            <button id="clearAllItems">Clear All Items</button>
+        </div>
+    </div>
+
+    <script src="categories.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('ServiceWorker registered'))
+                .catch(error => console.log('ServiceWorker registration failed:', error));
+        }
+    </script>
+</body>
+</html>
