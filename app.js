@@ -32,7 +32,8 @@ class ShoppingList {
             name: itemName,
             translation,
             icon,
-            id: Date.now()
+            id: Date.now(),
+            purchased: false
         });
 
         this.saveToLocalStorage();
@@ -74,6 +75,15 @@ class ShoppingList {
         this.renderLists();
     }
 
+    togglePurchased(category, id) {
+        const item = this.items[category].find(item => item.id === id);
+        if (item) {
+            item.purchased = !item.purchased;
+            this.saveToLocalStorage();
+            this.renderLists();
+        }
+    }
+
     clearAll() {
         if (confirm('Are you sure you want to clear all items?')) {
             this.items = {};
@@ -100,8 +110,11 @@ class ShoppingList {
                     <span class="item-count">${items.length} items</span>
                 </div>
                 ${items.map(item => `
-                    <div class="shopping-item" data-id="${item.id}">
+                    <div class="shopping-item${item.purchased ? ' purchased' : ''}" data-id="${item.id}">
                         <div class="item-info">
+                            <input type="checkbox" class="item-checkbox" 
+                                ${item.purchased ? 'checked' : ''} 
+                                onchange="shoppingList.togglePurchased('${category}', ${item.id})">
                             <span class="item-name">${item.name}</span>
                             <span class="translated-text">${item.translation}</span>
                         </div>

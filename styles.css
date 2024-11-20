@@ -183,18 +183,25 @@ button:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.shopping-item:last-child {
-    border-bottom: none;
+    padding: 12px 16px;
+    background-color: var(--card-background);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s;
 }
 
 .item-info {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.item-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
 }
 
 .item-name {
@@ -204,6 +211,12 @@ button:active {
 .translated-text {
     font-size: 0.9rem;
     color: var(--secondary-color);
+}
+
+.shopping-item.purchased .item-name,
+.shopping-item.purchased .translated-text {
+    text-decoration: line-through;
+    opacity: 0.7;
 }
 
 .delete-item {
