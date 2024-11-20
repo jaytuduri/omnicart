@@ -1,35 +1,27 @@
 const categories = {
     'Fruits': {
-        keywords: ['apple', 'banana', 'orange', 'grape', 'berry', 'pear', 'peach', 'plum', 'mango', 'kiwi', 'melon'],
-        icon: '🍎'
+        keywords: ['apple', 'banana', 'orange', 'grape', 'berry', 'pear', 'peach', 'plum', 'mango', 'kiwi', 'melon']
     },
     'Vegetables': {
-        keywords: ['carrot', 'broccoli', 'lettuce', 'tomato', 'potato', 'onion', 'garlic', 'pepper', 'cucumber', 'spinach'],
-        icon: '🥕'
+        keywords: ['carrot', 'broccoli', 'lettuce', 'tomato', 'potato', 'onion', 'garlic', 'pepper', 'cucumber', 'spinach']
     },
     'Dairy': {
-        keywords: ['milk', 'cheese', 'yogurt', 'butter', 'cream', 'egg'],
-        icon: '🥛'
+        keywords: ['milk', 'cheese', 'yogurt', 'butter', 'cream', 'egg']
     },
     'Meat & Fish': {
-        keywords: ['chicken', 'beef', 'pork', 'fish', 'salmon', 'tuna', 'meat', 'sausage', 'ham'],
-        icon: '🥩'
+        keywords: ['chicken', 'beef', 'pork', 'fish', 'salmon', 'tuna', 'meat', 'sausage', 'ham']
     },
     'Pantry': {
-        keywords: ['rice', 'pasta', 'flour', 'sugar', 'oil', 'vinegar', 'sauce', 'spice', 'herb', 'can', 'bread'],
-        icon: '🥫'
+        keywords: ['rice', 'pasta', 'flour', 'sugar', 'oil', 'vinegar', 'sauce', 'spice', 'herb', 'can', 'bread']
     },
     'Frozen': {
-        keywords: ['frozen', 'ice cream', 'pizza', 'vegetables frozen'],
-        icon: '❄️'
+        keywords: ['frozen', 'ice cream', 'pizza', 'vegetables frozen']
     },
     'Household': {
-        keywords: ['paper', 'soap', 'detergent', 'cleaner', 'tissue', 'toilet', 'bag'],
-        icon: '🏠'
+        keywords: ['paper', 'soap', 'detergent', 'cleaner', 'tissue', 'toilet', 'bag']
     },
     'Beverages': {
-        keywords: ['water', 'juice', 'soda', 'coffee', 'tea', 'drink'],
-        icon: '🥤'
+        keywords: ['water', 'juice', 'soda', 'coffee', 'tea', 'drink']
     }
 };
 
@@ -39,15 +31,13 @@ function categorizeItem(item) {
     for (const [category, data] of Object.entries(categories)) {
         if (data.keywords.some(keyword => itemLower.includes(keyword))) {
             return {
-                category,
-                icon: data.icon
+                category
             };
         }
     }
     
     return {
-        category: 'Other',
-        icon: '📦'
+        category: 'Other'
     };
 }
 

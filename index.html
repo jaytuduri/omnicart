@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode-transition">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -7,40 +7,58 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>OmniCart - Smart Shopping List</title>
     <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4CAF50',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <div class="app-container">
-        <header>
-            <h1>OmniCart</h1>
-            <div class="language-selector">
-                <label for="targetLang">Translate to:</label>
-                <select id="targetLang">
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="sv">Swedish</option>
-                </select>
-            </div>
-            <div class="clear-all">
-                <button id="clearAllItems">Clear All Items</button>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark-mode-transition">
+    <div class="min-h-screen flex flex-col max-w-2xl mx-auto px-4">
+        <header class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 py-4 z-50 dark-mode-transition">
+            <h1 class="text-2xl font-semibold mb-4">OmniCart</h1>
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <label for="targetLang" class="text-sm">Translate to:</label>
+                    <select id="targetLang" class="flex-1 p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="sv">Swedish</option>
+                    </select>
+                </div>
+                <button id="clearAllItems" class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring dark-mode-transition">
+                    Clear All Items
+                </button>
             </div>
         </header>
 
-        <main>
-            <div class="lists-container">
+        <main class="flex-1 overflow-y-auto py-4">
+            <div class="lists-container space-y-6">
                 <!-- Categories will be dynamically populated here -->
             </div>
         </main>
 
-        <div class="input-container">
-            <input type="text" id="itemInput" placeholder="Add an item..." autocomplete="off">
-            <button id="addItem">Add</button>
+        <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4 safe-area-bottom slide-up dark-mode-transition">
+            <div class="max-w-2xl mx-auto flex gap-2">
+                <input type="text" id="itemInput" placeholder="Add an item..." autocomplete="off"
+                    class="flex-1 p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
+                <button id="addItem" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors focus-ring">
+                    Add
+                </button>
+            </div>
         </div>
-
     </div>
 
     <script src="categories.js"></script>
