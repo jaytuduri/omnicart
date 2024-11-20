@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>OmniCart - Smart Shopping List</title>
     <link rel="manifest" href="manifest.json">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
     <script>
         tailwind.config = {
             darkMode: 'media',
@@ -21,6 +21,7 @@
             }
         }
     </script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark-mode-transition">
     <div class="min-h-screen flex flex-col max-w-2xl mx-auto px-4">
@@ -50,13 +51,14 @@
             </div>
         </main>
 
-        <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4 safe-area-bottom slide-up dark-mode-transition">
-            <div class="max-w-2xl mx-auto flex gap-2">
+        <div class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4 dark-mode-transition">
+            <div class="max-w-2xl mx-auto flex items-center gap-2">
                 <input type="text" id="itemInput" placeholder="Add an item..." autocomplete="off"
                     class="flex-1 p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
-                <button id="addItem" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors focus-ring">
-                    Add
+                <button id="voiceInput" class="p-2 rounded border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring dark-mode-transition">
+                    <i class='bx bxs-microphone text-2xl'></i>
                 </button>
+                <button id="addItem" class="p-2 rounded bg-primary text-white hover:bg-opacity-90 transition-colors focus-ring">Add</button>
             </div>
         </div>
     </div>

@@ -3,6 +3,27 @@ class ShoppingList {
         this.items = JSON.parse(localStorage.getItem('shoppingItems')) || {};
         this.setupEventListeners();
         this.renderLists();
+        this.setupSpeechRecognition();
+    }
+
+    setupSpeechRecognition() {
+        this.recognition = null;
+        if ('webkitSpeechRecognition' in window) {
+            this.recognition = new webkitSpeechRecognition();
+            this.recognition.continuous = false;
+            this.recognition.interimResults = false;
+            this.recognition.lang = 'en-US';
+
+            this.recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('itemInput').value = transcript;
+                this.addItem();
+            };
+
+            this.recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+            };
+        }
     }
 
     setupEventListeners() {
@@ -12,6 +33,30 @@ class ShoppingList {
         });
         document.getElementById('clearAllItems').addEventListener('click', () => this.clearAll());
         document.getElementById('targetLang').addEventListener('change', () => this.updateTranslations());
+
+        const voiceButton = document.getElementById('voiceInput');
+        if (voiceButton) {
+            if (this.recognition) {
+                voiceButton.addEventListener('click', () => {
+                    try {
+                        this.recognition.start();
+                        voiceButton.classList.add('animate-pulse');
+                        voiceButton.querySelector('i').classList.add('text-primary');
+                    } catch (e) {
+                        console.error('Speech recognition error:', e);
+                    }
+                });
+
+                this.recognition.onend = () => {
+                    voiceButton.classList.remove('animate-pulse');
+                    voiceButton.querySelector('i').classList.remove('text-primary');
+                };
+            } else {
+                voiceButton.addEventListener('click', () => {
+                    alert('Speech recognition is not supported in your browser. Please try using Chrome or Safari.');
+                });
+            }
+        }
     }
 
     async addItem() {
