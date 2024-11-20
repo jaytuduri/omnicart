@@ -244,20 +244,29 @@ select {
 }
 
 .clear-all {
-    padding: 16px;
-    text-align: center;
-    margin-bottom: var(--safe-area-inset-bottom);
+    padding: 8px 16px 0;
+    text-align: right;
 }
 
 #clearAllItems {
-    width: 100%;
-    background-color: #ff3b30;
-    margin-bottom: var(--safe-area-inset-bottom);
+    background-color: transparent;
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    width: auto;
 }
 
 @media (hover: hover) {
     button:hover {
         background-color: #388E3C;
+    }
+
+    #clearAllItems:hover {
+        background-color: #ff3b30;
+        color: white;
     }
 
     .delete-item:hover {
