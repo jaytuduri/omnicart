@@ -109,7 +109,7 @@ class ShoppingList {
             const categoryHeader = document.createElement('div');
             categoryHeader.className = 'text-lg font-semibold mb-2';
             categoryHeader.innerHTML = `
-                <h2 class="category-title">${categories[category]?.icon || '📦'} ${category}</h2>
+                <h2 class="category-title">${category}</h2>
                 <span class="item-count">${items.length} items</span>
             `;
 
