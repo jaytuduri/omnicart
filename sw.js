@@ -1,11 +1,11 @@
 const CACHE_NAME = 'omnicart-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/app.js',
-    '/categories.js',
-    '/manifest.json'
+    '/omnicart/',
+    '/omnicart/index.html',
+    '/omnicart/styles.css',
+    '/omnicart/app.js',
+    '/omnicart/categories.js',
+    '/omnicart/manifest.json'
 ];
 
 // Install event - cache assets

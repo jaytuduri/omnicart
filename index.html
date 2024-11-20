@@ -48,7 +48,7 @@
     <script>
         // Register Service Worker
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('/omnicart/sw.js')
                 .then(registration => console.log('ServiceWorker registered'))
                 .catch(error => console.log('ServiceWorker registration failed:', error));
         }

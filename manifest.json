@@ -2,7 +2,7 @@
   "name": "OmniCart",
   "short_name": "OmniCart",
   "description": "Multilingual Smart Shopping List",
-  "start_url": "/",
+  "start_url": "/omnicart/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
