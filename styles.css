@@ -196,6 +196,28 @@ button:active {
     flex: 1;
 }
 
+.item-quantity {
+    width: 50px;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    background-color: var(--input-background);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.item-quantity::placeholder {
+    color: var(--secondary-color);
+    opacity: 0.7;
+}
+
+.item-quantity::-webkit-inner-spin-button,
+.item-quantity::-webkit-outer-spin-button {
+    opacity: 1;
+    height: 24px;
+}
+
 .item-checkbox {
     width: 18px;
     height: 18px;

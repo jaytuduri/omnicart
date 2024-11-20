@@ -33,7 +33,8 @@ class ShoppingList {
             translation,
             icon,
             id: Date.now(),
-            purchased: false
+            purchased: false,
+            quantity: 1
         });
 
         this.saveToLocalStorage();
@@ -117,6 +118,13 @@ class ShoppingList {
                                 onchange="shoppingList.togglePurchased('${category}', ${item.id})">
                             <span class="item-name">${item.name}</span>
                             <span class="translated-text">${item.translation}</span>
+                            <input type="text" 
+                                class="item-quantity" 
+                                inputmode="numeric" 
+                                pattern="[0-9]*"
+                                placeholder="Qty"
+                                value="${item.quantity || ''}" 
+                                onchange="shoppingList.updateQuantity('${category}', ${item.id}, this.value)">
                         </div>
                         <button class="delete-item" onclick="shoppingList.deleteItem('${category}', ${item.id})">
                             ✕
@@ -127,6 +135,15 @@ class ShoppingList {
 
             container.appendChild(section);
         });
+    }
+
+    updateQuantity(category, id, quantity) {
+        const item = this.items[category].find(item => item.id === id);
+        if (item) {
+            item.quantity = Math.max(1, parseInt(quantity) || 1);
+            this.saveToLocalStorage();
+            this.renderLists();
+        }
     }
 }
 
