@@ -1,11 +1,30 @@
 :root {
+    /* Light theme variables */
     --primary-color: #4CAF50;
     --secondary-color: #2196F3;
     --background-color: #f2f2f7;
     --text-color: #1c1c1e;
-    --border-radius: 12px;
+    --card-background: #ffffff;
+    --header-background: rgba(255, 255, 255, 0.95);
+    --input-background: #ffffff;
+    --border-color: #e0e0e0;
     --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --border-radius: 12px;
     --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #66BB6A;
+        --secondary-color: #42A5F5;
+        --background-color: #1c1c1e;
+        --text-color: #ffffff;
+        --card-background: #2c2c2e;
+        --header-background: rgba(28, 28, 30, 0.95);
+        --input-background: #2c2c2e;
+        --border-color: #3c3c3e;
+        --shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
 }
 
 * {
@@ -46,12 +65,11 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--header-background);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    margin: 0;
-    padding: 16px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--border-color);
+    padding: max(16px, env(safe-area-inset-top)) 16px 16px;
 }
 
 h1 {
@@ -70,10 +88,10 @@ h1 {
 select {
     flex: 1;
     padding: 12px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 1rem;
-    background-color: white;
+    background-color: var(--input-background);
     appearance: none;
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
@@ -89,25 +107,21 @@ select {
     gap: 8px;
     margin: 16px;
     padding: 8px;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--header-background);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-input[type="text"] {
+.input-container input {
     flex: 1;
-    padding: 14px;
-    border: none;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    font-size: 1rem;
-    background-color: var(--background-color);
-}
-
-input[type="text"]:focus {
-    outline: none;
-    background-color: white;
+    font-size: 16px;
+    background-color: var(--input-background);
+    color: var(--text-color);
 }
 
 button {
@@ -138,10 +152,11 @@ button:active {
 }
 
 .category-section {
-    background: white;
+    background-color: var(--card-background);
     padding: 16px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
 }
 
 .category-header {
@@ -204,10 +219,10 @@ button:active {
     position: sticky;
     bottom: var(--safe-area-inset-bottom);
     padding: 16px;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--header-background);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid var(--border-color);
     margin-top: auto;
 }
 
