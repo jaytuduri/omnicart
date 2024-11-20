@@ -298,7 +298,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Custom focus styles */
 .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+    opacity: 0.5;
 }
 
 /* Slide up animation for the input container */
