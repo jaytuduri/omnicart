@@ -107,10 +107,10 @@ class ShoppingList {
             section.className = 'mb-6';
             
             const categoryHeader = document.createElement('div');
-            categoryHeader.className = 'text-lg font-semibold mb-2';
+            categoryHeader.className = 'category-header';
             categoryHeader.innerHTML = `
                 <h2 class="category-title">${category}</h2>
-                <span class="item-count">${items.length} items</span>
+                <span class="item-count">(${items.length})</span>
             `;
 
             const itemsList = document.createElement('div');
