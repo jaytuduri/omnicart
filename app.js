@@ -34,6 +34,22 @@ class ShoppingList {
         document.getElementById('clearAllItems').addEventListener('click', () => this.clearAll());
         document.getElementById('targetLang').addEventListener('change', () => this.updateTranslations());
 
+        // Settings modal event listeners
+        document.getElementById('settingsButton').addEventListener('click', () => {
+            document.getElementById('settingsModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeSettings').addEventListener('click', () => {
+            document.getElementById('settingsModal').classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('settingsModal')) {
+                document.getElementById('settingsModal').classList.add('hidden');
+            }
+        });
+
         const voiceButton = document.getElementById('voiceInput');
         if (voiceButton) {
             if (this.recognition) {

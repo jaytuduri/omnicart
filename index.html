@@ -26,24 +26,43 @@
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark-mode-transition">
     <div class="min-h-screen flex flex-col max-w-2xl mx-auto px-4">
         <header class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 py-4 z-50 dark-mode-transition">
-            <h1 class="text-2xl font-semibold mb-4">OmniCart</h1>
+            <h1 class="text-2xl font-semibold mb-4 flex justify-between items-center">
+                OmniCart
+                <button id="settingsButton" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring">
+                    <i class='bx bx-cog text-xl'></i>
+                </button>
+            </h1>
             <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <label for="targetLang" class="text-sm">Translate to:</label>
-                    <select id="targetLang" class="flex-1 p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
-                        <option value="es">Spanish</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="it">Italian</option>
-                        <option value="pt">Portuguese</option>
-                        <option value="sv">Swedish</option>
-                    </select>
-                </div>
                 <button id="clearAllItems" class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring dark-mode-transition">
                     Clear All Items
                 </button>
             </div>
         </header>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+            <div class="bg-white dark:bg-gray-900 max-w-md mx-auto mt-20 rounded-lg shadow-lg">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Settings</h2>
+                    <button id="closeSettings" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring">
+                        <i class='bx bx-x text-xl'></i>
+                    </button>
+                </div>
+                <div class="p-4 space-y-4">
+                    <div class="space-y-2">
+                        <label for="targetLang" class="text-sm block">Translate items to:</label>
+                        <select id="targetLang" class="w-full p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="it">Italian</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="sv">Swedish</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main class="flex-1 overflow-y-auto py-4">
             <div class="lists-container space-y-6">
