@@ -82,5 +82,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- MyMemory Translation API for providing translation services
+- [MyMemory Translation API](https://mymemory.translated.net) for providing translation services
 - Icons from Boxicons
