@@ -1,5 +1,5 @@
 // Cache version - change this to force cache refresh
-const CACHE_VERSION = '8';
+const CACHE_VERSION = '9';
 const CACHE_NAME = `omnicart-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
     '/omnicart/',
