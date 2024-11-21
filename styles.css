@@ -10,6 +10,7 @@
     --border-color: #e0e0e0;
     --shadow: 0 2px 8px rgba(0,0,0,0.1);
     --border-radius: 12px;
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
     --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -63,7 +64,7 @@ header {
     position: sticky;
     top: 0;
     background: var(--header-background);
-    padding: 16px 0;
+    padding: calc(16px + var(--safe-area-inset-top)) 0 16px;
     border-bottom: 1px solid var(--border-color);
     z-index: 100;
 }
