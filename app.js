@@ -289,6 +289,20 @@ class ShoppingList {
                 }
                 
                 const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = item.purchased;
+                checkbox.addEventListener('change', () => this.togglePurchased(category, item.id));
+                
+                itemElement.appendChild(checkbox);
+                itemsList.appendChild(itemElement);
+            });
+
+            section.appendChild(categoryHeader);
+            section.appendChild(itemsList);
+            container.appendChild(section);
+        });
+    }
+}
 
 // Initialize the app
 const shoppingList = new ShoppingList();
