@@ -49,12 +49,6 @@ export class ListRenderer {
         const itemContent = document.createElement('div');
         itemContent.className = 'flex-1';
         
-        if (item.icon) {
-            const icon = document.createElement('i');
-            icon.className = `bx ${item.icon} mr-2`;
-            itemContent.appendChild(icon);
-        }
-
         // Text container
         const textContainer = document.createElement('div');
         textContainer.className = 'flex flex-col';
