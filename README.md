@@ -59,8 +59,14 @@ omnicart/
 ├── app.js             # Core application logic
 ├── categories.js      # Category definitions and logic
 ├── sw.js             # Service Worker for offline support
-└── manifest.json      # PWA manifest
+├── manifest.json      # PWA manifest
+└── src/              # Source code directory
+    ├── components/   # UI components
+    ├── models/       # Data models
+    ├── services/     # Core services (translation, storage, etc.)
+    └── utils/        # Utility functions and helpers
 ```
+
 
 ## Contributing
 
@@ -77,4 +83,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - MyMemory Translation API for providing translation services
-- Icons from various emoji sets
+- Icons from Boxicons
