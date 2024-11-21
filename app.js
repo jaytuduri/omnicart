@@ -36,6 +36,15 @@ class ShoppingList {
             document.getElementById('settingsModal').classList.add('hidden');
         });
 
+        document.getElementById('deleteLocalStorage').addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete all data? This action cannot be undone.')) {
+                localStorage.clear();
+                this.items = {};
+                this.renderLists();
+                document.getElementById('settingsModal').classList.add('hidden');
+            }
+        });
+
         // Close modal when clicking outside
         document.getElementById('settingsModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('settingsModal')) {
