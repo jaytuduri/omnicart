@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>OmniCart - Smart Shopping List</title>
     <link rel="manifest" href="manifest.json">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" rel="stylesheet">
     <script type="module" src="app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,7 +30,7 @@
             <h1 class="text-2xl font-semibold mb-4 flex justify-between items-center">
                 OmniCart
                 <button id="settingsButton" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring">
-                    <i class='bx bx-cog text-xl'></i>
+                    <i class="iconoir-settings text-xl"></i>
                 </button>
             </h1>
             <div class="space-y-4">
@@ -46,7 +46,7 @@
                 <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                     <h2 class="text-xl font-semibold">Settings</h2>
                     <button id="closeSettings" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring">
-                        <i class='bx bx-x text-xl'></i>
+                        <i class="iconoir-xmark text-xl"></i>
                     </button>
                 </div>
                 <div class="p-4 space-y-4">
@@ -81,10 +81,10 @@
                 <input type="text" id="itemInput" placeholder="Add an item..." autocomplete="off"
                     class="flex-1 p-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-ring dark-mode-transition">
                 <button id="voiceInput" class="p-2 rounded border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-ring dark-mode-transition">
-                    <i class='bx bxs-microphone text-xl'></i>
+                    <i class="iconoir-microphone text-xl"></i>
                 </button>
                 <button id="addItem" class="p-2 rounded bg-primary text-white hover:bg-opacity-90 transition-colors focus-ring">
-                    <i class='bx bx-cart-add text-xl'></i>
+                    <i class="iconoir-cart-plus text-xl"></i>
                 </button>
             </div>
         </div>
