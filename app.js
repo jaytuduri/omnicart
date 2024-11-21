@@ -1,4 +1,14 @@
+/**
+ * Shopping list app
+ * 
+ * @class ShoppingList
+ */
 class ShoppingList {
+    /**
+     * Constructor
+     * 
+     * @constructor
+     */
     constructor() {
         this.items = JSON.parse(localStorage.getItem('shoppingItems')) || {};
         this.setupEventListeners();
@@ -6,26 +16,9 @@ class ShoppingList {
         this.setupSpeechRecognition();
     }
 
-    setupSpeechRecognition() {
-        this.recognition = null;
-        if ('webkitSpeechRecognition' in window) {
-            this.recognition = new webkitSpeechRecognition();
-            this.recognition.continuous = false;
-            this.recognition.interimResults = false;
-            this.recognition.lang = 'en-US';
-
-            this.recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                document.getElementById('itemInput').value = transcript;
-                this.addItem();
-            };
-
-            this.recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-            };
-        }
-    }
-
+    /**
+     * Set up event listeners
+     */
     setupEventListeners() {
         document.getElementById('addItem').addEventListener('click', () => this.addItem());
         document.getElementById('itemInput').addEventListener('keypress', (e) => {
@@ -75,11 +68,86 @@ class ShoppingList {
         }
     }
 
+    /**
+     * Parse the input string and extract the item name and quantity
+     * 
+     * @param {string} text The input string
+     * @returns An object with the item name and quantity
+     */
+    parseInput(text) {
+        // Convert common unit words to their numeric values
+        const unitMap = {
+            'a': '1',
+            'an': '1',
+            'one': '1',
+            'two': '2',
+            'three': '3',
+            'four': '4',
+            'five': '5',
+            'six': '6',
+            'seven': '7',
+            'eight': '8',
+            'nine': '9',
+            'ten': '10'
+        };
+
+        // Replace word numbers with digits
+        let processedText = text.toLowerCase();
+        Object.entries(unitMap).forEach(([word, num]) => {
+            processedText = processedText.replace(new RegExp(`^${word}\\s+`, 'i'), `${num} `);
+            processedText = processedText.replace(new RegExp(`\\s+${word}$`, 'i'), ` ${num}`);
+        });
+
+        // Common measurement units to strip from item name
+        const units = ['kg', 'g', 'lb', 'lbs', 'oz', 'l', 'ml'];
+        
+        let quantity = 1;
+        let itemName = processedText;
+
+        // Try various formats:
+        // 1. Number at start: "6 apples" or "2kg rice"
+        let match = processedText.match(/^(\d+(?:\.\d+)?)\s*(?:${units.join('|')})?\s+(.+)$/);
+        if (match) {
+            quantity = parseFloat(match[1]);
+            itemName = match[2].trim();
+        } else {
+            // 2. Number at end: "apples 6" or "rice 2kg"
+            match = processedText.match(/^(.+?)\s+(\d+(?:\.\d+)?)\s*(?:${units.join('|')})?$/);
+            if (match) {
+                itemName = match[1].trim();
+                quantity = parseFloat(match[2]);
+            } else {
+                // 3. Just the item name with optional unit
+                match = processedText.match(/^(.+?)(?:\s+(?:${units.join('|')}))?$/);
+                if (match) {
+                    itemName = match[1].trim();
+                }
+            }
+        }
+
+        // Clean up the item name - remove units if they're part of the name
+        units.forEach(unit => {
+            itemName = itemName.replace(new RegExp(`\\s*${unit}\\s*$`, 'i'), '');
+        });
+
+        // Capitalize first letter of each word in item name
+        itemName = itemName.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
+        return { itemName, quantity };
+    }
+
+    /**
+     * Add an item to the list
+     */
     async addItem() {
         const input = document.getElementById('itemInput');
-        const itemName = input.value.trim();
+        const inputText = input.value.trim();
         
-        if (!itemName) return;
+        if (!inputText) return;
+
+        const { itemName, quantity } = this.parseInput(inputText);
 
         const targetLang = document.getElementById('targetLang').value;
         const translation = await this.translateText(itemName, targetLang);
@@ -95,8 +163,8 @@ class ShoppingList {
             icon,
             id: Date.now(),
             purchased: false,
-            quantity: 1,
-            isNew: true // Mark as new for animation
+            quantity: quantity,
+            isNew: true
         });
 
         this.saveToLocalStorage();
@@ -104,6 +172,13 @@ class ShoppingList {
         input.value = '';
     }
 
+    /**
+     * Translate the given text to the given language
+     * 
+     * @param {string} text The text to translate
+     * @param {string} targetLang The target language
+     * @returns The translated text
+     */
     async translateText(text, targetLang) {
         try {
             // Using a free translation API (you might want to replace this with a more reliable service)
@@ -116,6 +191,9 @@ class ShoppingList {
         }
     }
 
+    /**
+     * Update the translations for all items
+     */
     async updateTranslations() {
         const targetLang = document.getElementById('targetLang').value;
         
@@ -129,6 +207,12 @@ class ShoppingList {
         this.renderLists();
     }
 
+    /**
+     * Delete an item
+     * 
+     * @param {string} category The category of the item to delete
+     * @param {number} id The ID of the item to delete
+     */
     deleteItem(category, id) {
         this.items[category] = this.items[category].filter(item => item.id !== id);
         if (this.items[category].length === 0) {
@@ -138,6 +222,12 @@ class ShoppingList {
         this.renderLists();
     }
 
+    /**
+     * Toggle the purchased status of an item
+     * 
+     * @param {string} category The category of the item to toggle
+     * @param {number} id The ID of the item to toggle
+     */
     togglePurchased(category, id) {
         const item = this.items[category].find(item => item.id === id);
         if (item) {
@@ -147,6 +237,9 @@ class ShoppingList {
         }
     }
 
+    /**
+     * Clear all items
+     */
     clearAll() {
         if (confirm('Are you sure you want to clear all items?')) {
             this.items = {};
@@ -155,10 +248,16 @@ class ShoppingList {
         }
     }
 
+    /**
+     * Save the items to local storage
+     */
     saveToLocalStorage() {
         localStorage.setItem('shoppingItems', JSON.stringify(this.items));
     }
 
+    /**
+     * Render the lists
+     */
     renderLists() {
         const container = document.querySelector('.lists-container');
         container.innerHTML = '';
@@ -190,67 +289,6 @@ class ShoppingList {
                 }
                 
                 const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = item.purchased;
-                checkbox.className = 'w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary';
-                checkbox.addEventListener('change', () => this.togglePurchased(category, item.id));
-
-                const textContainer = document.createElement('div');
-                textContainer.className = 'flex-1';
-
-                const itemName = document.createElement('div');
-                itemName.className = item.purchased ? 'line-through text-gray-500' : '';
-                itemName.textContent = item.name;
-
-                const translatedName = document.createElement('div');
-                translatedName.className = 'text-sm text-gray-500 dark:text-gray-400';
-                translatedName.textContent = item.translation !== item.name ? item.translation : '';
-
-                const controls = document.createElement('div');
-                controls.className = 'flex items-center gap-2';
-
-                const quantityInput = document.createElement('input');
-                quantityInput.type = 'number';
-                quantityInput.value = item.quantity;
-                quantityInput.min = '1';
-                quantityInput.className = 'w-16 p-1 text-center rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800';
-                quantityInput.addEventListener('change', (e) => this.updateQuantity(category, item.id, e.target.value));
-
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'p-2 text-red-500 hover:text-red-600 transition-colors';
-                deleteButton.textContent = '×';
-                deleteButton.addEventListener('click', () => this.deleteItem(category, item.id));
-
-                textContainer.appendChild(itemName);
-                if (item.translation !== item.name) {
-                    textContainer.appendChild(translatedName);
-                }
-
-                controls.appendChild(quantityInput);
-                controls.appendChild(deleteButton);
-
-                itemElement.appendChild(checkbox);
-                itemElement.appendChild(textContainer);
-                itemElement.appendChild(controls);
-
-                itemsList.appendChild(itemElement);
-            });
-
-            section.appendChild(categoryHeader);
-            section.appendChild(itemsList);
-            container.appendChild(section);
-        });
-    }
-
-    updateQuantity(category, id, quantity) {
-        const item = this.items[category].find(item => item.id === id);
-        if (item) {
-            item.quantity = Math.max(1, parseInt(quantity) || 1);
-            this.saveToLocalStorage();
-            this.renderLists();
-        }
-    }
-}
 
 // Initialize the app
 const shoppingList = new ShoppingList();
