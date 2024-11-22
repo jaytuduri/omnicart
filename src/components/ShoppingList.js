@@ -22,6 +22,21 @@ export class ShoppingList {
         document.getElementById('clearAllItems').addEventListener('click', () => this.clearAll());
         document.getElementById('targetLang').addEventListener('change', () => this.updateTranslations());
 
+        // Translate dropdown
+        document.getElementById('translateButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = document.getElementById('translateDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Close translate dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('translateDropdown');
+            if (!dropdown.contains(e.target) && !e.target.closest('#translateButton')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
         // Settings modal
         document.getElementById('settingsButton').addEventListener('click', () => {
             document.getElementById('settingsModal').classList.remove('hidden');
