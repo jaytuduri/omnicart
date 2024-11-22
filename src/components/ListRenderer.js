@@ -8,9 +8,10 @@ export class ListRenderer {
         });
     }
 
-    static createCategorySection(category, items, { onToggle, onDelete, onQuantityChange }) {
+    static createCategorySection(category, items, { onToggle, onDelete, onQuantityChange, onItemDrop }) {
         const section = document.createElement('div');
         section.className = 'mb-6';
+        section.dataset.category = category;
         
         const categoryHeader = document.createElement('div');
         categoryHeader.className = 'category-header';
@@ -21,6 +22,48 @@ export class ListRenderer {
 
         const itemsList = document.createElement('div');
         itemsList.className = 'space-y-2';
+        itemsList.dataset.category = category;
+        
+        // Add dragover event listener to the items list
+        itemsList.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const draggingElement = document.querySelector('.dragging');
+            if (!draggingElement) return;
+            
+            const afterElement = this.getDragAfterElement(itemsList, e.clientY);
+            if (afterElement) {
+                itemsList.insertBefore(draggingElement, afterElement);
+            } else {
+                itemsList.appendChild(draggingElement);
+            }
+        });
+
+        itemsList.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const itemId = e.dataTransfer.getData('text/plain');
+            const draggingElement = document.querySelector(`[data-id="${itemId}"]`);
+            if (!draggingElement) return; // Guard against null dragging element
+            
+            const sourceCategory = draggingElement.dataset.sourceCategory;
+            const targetCategory = itemsList.dataset.category;
+            
+            if (onItemDrop) {
+                const items = Array.from(itemsList.children);
+                const newIndex = items.indexOf(draggingElement);
+                onItemDrop(itemId, sourceCategory, targetCategory, newIndex >= 0 ? newIndex : items.length);
+            }
+            
+            // Remove dragging class from all elements
+            document.querySelectorAll('.dragging').forEach(el => {
+                el.classList.remove('dragging', 'opacity-50');
+            });
+        });
+
+        itemsList.addEventListener('dragend', () => {
+            document.querySelectorAll('.dragging').forEach(el => {
+                el.classList.remove('dragging', 'opacity-50');
+            });
+        });
 
         items.forEach(item => {
             itemsList.appendChild(
@@ -36,7 +79,24 @@ export class ListRenderer {
     static createItemElement(category, item, { onToggle, onDelete, onQuantityChange }) {
         const itemElement = document.createElement('div');
         itemElement.className = `flex items-center gap-4 p-3 bg-gray-50 dark:bg-gray-800 rounded item-hover dark-mode-transition ${item.isNew ? 'new-item' : ''}`;
+        itemElement.draggable = true;
+        itemElement.dataset.id = item.id;
+        itemElement.dataset.sourceCategory = category;
         
+        // Add drag event listeners
+        itemElement.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', item.id);
+            itemElement.classList.add('dragging');
+            // Add a semi-transparent effect
+            setTimeout(() => {
+                itemElement.classList.add('opacity-50');
+            }, 0);
+        });
+
+        itemElement.addEventListener('dragend', () => {
+            itemElement.classList.remove('dragging', 'opacity-50');
+        });
+
         // Checkbox
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -94,5 +154,20 @@ export class ListRenderer {
         itemElement.appendChild(deleteButton);
 
         return itemElement;
+    }
+
+    static getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('[draggable="true"]:not(.dragging)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            
+            if (offset < 0 && offset > closest.offset) {
+                return { offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 }

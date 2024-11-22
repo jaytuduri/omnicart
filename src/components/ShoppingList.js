@@ -147,7 +147,52 @@ export class ShoppingList {
         ListRenderer.render(this.items, {
             onToggle: (category, id) => this.togglePurchased(category, id),
             onDelete: (category, id) => this.deleteItem(category, id),
-            onQuantityChange: (category, id, quantity) => this.updateQuantity(category, id, quantity)
+            onQuantityChange: (category, id, quantity) => this.updateQuantity(category, id, quantity),
+            onItemDrop: (itemId, sourceCategory, targetCategory, newIndex) => this.handleItemDrop(itemId, sourceCategory, targetCategory, newIndex)
         });
+    }
+
+    handleItemDrop(itemId, sourceCategory, targetCategory, newIndex) {
+        // Guard against invalid data
+        if (!itemId || !sourceCategory || !targetCategory || !this.items[sourceCategory]) {
+            return;
+        }
+
+        // Find the item to move
+        const itemToMove = this.items[sourceCategory].find(item => item.id === itemId);
+        if (!itemToMove) return;
+
+        // If the item is dropped in the same category
+        if (sourceCategory === targetCategory) {
+            const items = this.items[sourceCategory];
+            const filteredItems = items.filter(item => item.id !== itemId);
+            
+            // Insert the item at the new position
+            filteredItems.splice(newIndex, 0, itemToMove);
+            this.items[sourceCategory] = filteredItems;
+        } else {
+            // Remove item from source category
+            this.items[sourceCategory] = this.items[sourceCategory].filter(item => item.id !== itemId);
+            
+            // Remove the source category if it's empty
+            if (this.items[sourceCategory].length === 0) {
+                delete this.items[sourceCategory];
+            }
+
+            // Create target category if it doesn't exist
+            if (!this.items[targetCategory]) {
+                this.items[targetCategory] = [];
+            }
+
+            // Create a copy of the item for the new category
+            const itemForNewCategory = { ...itemToMove };
+
+            // Insert the item at the new position in the target category
+            this.items[targetCategory].splice(newIndex, 0, itemForNewCategory);
+        }
+
+        // Save the updated items and re-render
+        StorageService.saveItems(this.items);
+        this.renderLists();
     }
 }
