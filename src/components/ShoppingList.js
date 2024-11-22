@@ -148,7 +148,9 @@ export class ShoppingList {
             onToggle: (category, id) => this.togglePurchased(category, id),
             onDelete: (category, id) => this.deleteItem(category, id),
             onQuantityChange: (category, id, quantity) => this.updateQuantity(category, id, quantity),
-            onItemDrop: (itemId, sourceCategory, targetCategory, newIndex) => this.handleItemDrop(itemId, sourceCategory, targetCategory, newIndex)
+            onItemDrop: (itemId, sourceCategory, targetCategory, newIndex) => this.handleItemDrop(itemId, sourceCategory, targetCategory, newIndex),
+            onItemEdit: (category, id, newName) => this.handleItemEdit(category, id, newName),
+            onCategoryEdit: (oldCategory, newCategory) => this.handleCategoryEdit(oldCategory, newCategory)
         });
     }
 
@@ -192,6 +194,48 @@ export class ShoppingList {
         }
 
         // Save the updated items and re-render
+        StorageService.saveItems(this.items);
+        this.renderLists();
+    }
+
+    async handleItemEdit(category, id, newName) {
+        const item = this.items[category].find(item => item.id === id);
+        if (item) {
+            item.name = newName;
+            const targetLang = document.getElementById('targetLang').value;
+            item.translation = await TranslationService.translate(newName, targetLang);
+            const { category: newCategory, icon } = categorizeItem(newName);
+            item.icon = icon;
+
+            // If the category has changed, move the item
+            if (newCategory !== category) {
+                this.items[category] = this.items[category].filter(i => i.id !== id);
+                if (this.items[category].length === 0) {
+                    delete this.items[category];
+                }
+                
+                if (!this.items[newCategory]) {
+                    this.items[newCategory] = [];
+                }
+                this.items[newCategory].push(item);
+            }
+
+            StorageService.saveItems(this.items);
+            this.renderLists();
+        }
+    }
+
+    handleCategoryEdit(oldCategory, newCategory) {
+        if (oldCategory === newCategory || !this.items[oldCategory]) return;
+
+        // If the new category already exists, merge items
+        if (this.items[newCategory]) {
+            this.items[newCategory] = [...this.items[newCategory], ...this.items[oldCategory]];
+        } else {
+            this.items[newCategory] = this.items[oldCategory];
+        }
+
+        delete this.items[oldCategory];
         StorageService.saveItems(this.items);
         this.renderLists();
     }
