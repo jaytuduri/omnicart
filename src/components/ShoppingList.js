@@ -11,7 +11,7 @@ export class ShoppingList {
         this.items = StorageService.getItems();
         this.setupEventListeners();
         this.renderLists();
-        this.setupSpeechRecognition();
+        this.initSpeechRecognition();
     }
 
     setupEventListeners() {
@@ -61,35 +61,23 @@ export class ShoppingList {
                 document.getElementById('settingsModal').classList.add('hidden');
             }
         });
-
-        // Voice input
-        this.setupVoiceInput();
     }
 
-    setupVoiceInput() {
-        const voiceButton = document.getElementById('voiceInput');
-        if (!voiceButton) return;
-
+    initSpeechRecognition() {
         this.speechService = new SpeechService((text) => {
             document.getElementById('itemInput').value = text;
             this.addItem();
         });
 
-        if (this.speechService.isSupported()) {
-            voiceButton.addEventListener('click', () => {
-                this.speechService.start();
-                voiceButton.classList.add('animate-pulse');
-                voiceButton.querySelector('i').classList.add('text-primary');
-            });
-
-            this.speechService.recognition.onend = () => {
-                voiceButton.classList.remove('animate-pulse');
-                voiceButton.querySelector('i').classList.remove('text-primary');
-            };
-        } else {
-            voiceButton.addEventListener('click', () => {
-                alert('Speech recognition is not supported in your browser. Please try using Chrome or Safari.');
-            });
+        const voiceButton = document.getElementById('voiceInput');
+        if (voiceButton) {
+            if (this.speechService.isSupported()) {
+                voiceButton.addEventListener('click', () => {
+                    this.speechService.start();
+                });
+            } else {
+                voiceButton.style.display = 'none';
+            }
         }
     }
 

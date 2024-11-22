@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>OmniCart - Smart Shopping List</title>
@@ -100,14 +101,14 @@
         </div>
     </div>
 
-    <script src="categories.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="categories.js"></script>
+
     <script>
         // Register Service Worker
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/omnicart/sw.js')
+            navigator.serviceWorker.register('sw.js')
                 .then(registration => console.log('ServiceWorker registered'))
-                .catch(error => console.log('ServiceWorker registration failed:', error));
+                .catch(error => console.error('ServiceWorker registration failed:', error));
         }
     </script>
 </body>
