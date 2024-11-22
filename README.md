@@ -57,14 +57,13 @@ omnicart/
 ├── index.html          # Main HTML file
 ├── styles.css          # Styles and layout
 ├── app.js             # Core application logic
-├── categories.js      # Category definitions and logic
 ├── sw.js             # Service Worker for offline support
 ├── manifest.json      # PWA manifest
 └── src/              # Source code directory
     ├── components/   # UI components
     ├── models/       # Data models
     ├── services/     # Core services (translation, storage, etc.)
-    └── utils/        # Utility functions and helpers
+    └── utils/        # Utility functions including category logic
 ```
 
 

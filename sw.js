@@ -1,13 +1,14 @@
 // Cache version - change this to force cache refresh
-const CACHE_VERSION = '14';
+const CACHE_VERSION = '15';
 const CACHE_NAME = `omnicart-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
-    '/omnicart/',
-    '/omnicart/index.html',
-    '/omnicart/styles.css',
-    '/omnicart/app.js',
-    '/omnicart/categories.js',
-    '/omnicart/manifest.json'
+    '/',
+    './index.html',
+    './styles.css',
+    './app.js',
+    './manifest.json',
+    './icons/icon-192x192.png',
+    './icons/icon-512x512.png'
 ];
 
 // Install event - cache assets
