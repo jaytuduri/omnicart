@@ -82,4 +82,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - [MyMemory Translation API](https://mymemory.translated.net) for providing translation services
-- Icons from Boxicons
+- Icons from Phosphor Icons - [phosphoricons.com](https://phosphoricons.com)
