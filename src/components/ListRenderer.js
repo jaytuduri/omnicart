@@ -220,7 +220,7 @@ export class ListRenderer {
         // Delete button
         const deleteButton = document.createElement('button');
         deleteButton.className = 'text-red-500 hover:text-red-700 focus:outline-none ml-2';
-        deleteButton.innerHTML = '<i class="iconoir-xmark text-xl"></i>';
+        deleteButton.innerHTML = '<i class="ph ph-x text-xl"></i>';
         if (onDelete) {
             deleteButton.addEventListener('click', () => onDelete(category, item.id));
         }
